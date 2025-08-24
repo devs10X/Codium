@@ -8,7 +8,7 @@ export function LogOutButton(){
 
     return (
         <>
-        <Button onClick={async () => {
+        <Button variant={"destructive"} onClick={async () => {
             await signOut();
             console.log("Sign out");   
             redirect('/');
