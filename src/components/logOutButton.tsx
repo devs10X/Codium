@@ -8,8 +8,6 @@ export function LogOutButton(){
 
     return (
         <>
-        <p>{JSON.stringify(session)}</p>
-
         <Button onClick={async () => {
             await signOut();
             console.log("Sign out");   
