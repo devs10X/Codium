@@ -16,6 +16,8 @@ import { redirect } from 'next/navigation'
 import Features from './features-1'
 import IntegrationsSection from './integrations-3'
 import FooterSection from './footer'
+import { AuroraText } from './magicui/aurora-text'
+import { PointerHighlight } from './ui/pointer-highlight'
 
 
 const transitionVariants : any = {
@@ -109,33 +111,23 @@ export default function HeroSection() {
                         <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"></div>
                         <div className="mx-auto max-w-7xl px-6">
                             <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
-                                <AnimatedGroup variants={transitionVariants}>
-                                    <Link
-                                        href="#link"
-                                        className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950">
-                                        <span className="text-foreground text-sm">Introducing Support for AI Models</span>
-                                        <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
-
-                                        <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
-                                            <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-                                                <span className="flex size-6">
-                                                    <ArrowRight className="m-auto size-3" />
-                                                </span>
-                                                <span className="flex size-6">
-                                                    <ArrowRight className="m-auto size-3" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </AnimatedGroup>
-
-                                <TextEffect
-                                    preset="fade-in-blur"
-                                    speedSegment={0.3}
-                                    as="h1"
-                                    className="mt-8 text-balance text-3xl md:text-5xl lg:mt-16 xl:text-[5.25rem]">
-                                     The AI Code Agent
-                                </TextEffect>
+                              <div className='flex justify-center items-center gap-3'>
+                                <div>
+                                  <span className='text-balance text-3xl md:text-5xl lg:mt-16 xl:text-[5.25rem]'>The Ultimate</span>
+                                </div>
+                                <div>
+                                    <motion.span
+                                        initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                                        transition={{ duration: 0.8, ease: "easeOut" }}
+                                        className='flex justify-center'
+                                    >
+                                      <PointerHighlight>
+                                        <span className='text-balance text-3xl md:text-5xl lg:mt-16 xl:text-[5.25rem] px-5'>AI Code Editor</span>
+                                      </PointerHighlight>
+                                    </motion.span>
+                                </div>
+                              </div>
 
                                 <div className='justify-center hidden sm:flex'>
                                     <TypewriterEffectSmooth words={words} className='text-sm ' />
@@ -203,14 +195,7 @@ export default function HeroSection() {
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                                     <Image
                                         className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                                        src="/mail2.png"
-                                        alt="app screen"
-                                        width="2700"
-                                        height="1440"
-                                    />
-                                    <Image
-                                        className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                                        src="/mail2-light.png"
+                                        src="/hero.png"
                                         alt="app screen"
                                         width="2700"
                                         height="1440"

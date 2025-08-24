@@ -96,6 +96,8 @@ ULTRA IMPORTANT: Create code in multiple files not only in one file. The code sh
 
 ULTRA IMPORTANT: For errors like 'Could not find module ./TodoItem' in '/components/TodoList.js', verify the file's existence, import path accuracy, default export, and module resolution settings in the project configuration. do it automatically.
 
+ULTRA IMPORTANT: Strictly create all the files imported in main file and use relative paths
+
 example: 
     <user_query>Can you help me create a React app to calculate the 2+2?</user_query>
     <assistant_message>
