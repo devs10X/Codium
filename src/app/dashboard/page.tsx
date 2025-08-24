@@ -2,10 +2,10 @@
 
 import { Chat } from "@/components/chat";
 
-import { LogOutButton } from "@/components/logOutButton";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { Sandbox } from "@/components/sandbox";
+import { Appbar } from "@/components/appbar";
 
 
 export default function Dashboard() {
@@ -16,10 +16,7 @@ export default function Dashboard() {
 
     return (
         <>
-        <div className="flex justify-between border-b p-2 items-center">
-            <h1 className="text-2xl font-bold">Codium</h1>
-            <div><LogOutButton/></div>
-        </div>
+        <Appbar />
         <div className="w-screen h-[calc(100vh-56px)] grid grid-cols-10">
             <div className="col-span-3">
                 <Chat />
