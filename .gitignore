@@ -40,5 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+
 #pnpm lock file
-pnpm-lock.yml
+pnpm-lock.yaml
+
+/src/generated/prisma
