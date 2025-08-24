@@ -10,7 +10,7 @@ const mockFiles = JSON.stringify({
     "/components/Button.js": "export default function Button({ label }) {\n  return (\n    <button className=\"px-6 py-3 rounded-md bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition\">\n      {label}\n    </button>\n  )\n}"
   })
 
-export function Sandbox() {
+export function Sandbox({files}: {files: any}) {
     return (
         <div className="h-full">
         <SandpackProvider template="react" theme="dark" style={{height: "100%", width: "100%"}} options={{
@@ -19,7 +19,7 @@ export function Sandbox() {
             recompileDelay: 300,
             externalResources: ["https://cdn.tailwindcss.com"],
         }}
-        files={JSON.parse(mockFiles)}
+        files={files}
         >
             <SandpackLayout style={{height: "100%", width: "100%"}} className="scrollbar-custom">
                 <div style={{width: "15%"}}>
@@ -31,7 +31,7 @@ export function Sandbox() {
                         showTabs={false}
                         closableTabs={false}
                         showInlineErrors
-                        style={{height: "100%"}}
+                        style={{height: "calc(100vh - 71px)"}}
                         className="scrollbar-custom"
                     />
                 </div>
