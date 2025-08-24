@@ -11,7 +11,7 @@ const systemPrompt = getSystemPrompt();
 export async function POST(req: Request) {
     const { messages } = await req.json();
     const stream = await client.chat.completions.create({
-        model : 'openai/gpt-4.1',
+        model : 'xai/grok-3',
         messages : [{
             role : 'system',
             content : systemPrompt
