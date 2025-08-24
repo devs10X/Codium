@@ -12,24 +12,30 @@ interface DisplayMessage {
   role: "user" | "assistant" | "system";
   content?: string;
   file?: string;
+  conversationTurn?: number; // Track which conversation turn this belongs to
 }
 
 function refineMessages(
   prev: DisplayMessage[],
-  parsed: { assistantMessage?: string; artifacts?: any[] }
+  parsed: { assistantMessage?: string; artifacts?: any[] },
+  currentTurn: number
 ): DisplayMessage[] {
   const updated = [...prev];
 
   // Handle assistant text streaming
   if (parsed.assistantMessage) {
     const lastIdx = updated.findLastIndex(
-      (m) => m.role === "assistant" && !m.file
+      (m) => m.role === "assistant" && !m.file && m.conversationTurn === currentTurn
     );
 
     if (lastIdx >= 0) {
       updated[lastIdx].content = parsed.assistantMessage;
     } else {
-      updated.push({ role: "assistant", content: parsed.assistantMessage });
+      updated.push({ 
+        role: "assistant", 
+        content: parsed.assistantMessage,
+        conversationTurn: currentTurn
+      });
     }
   }
 
@@ -37,8 +43,14 @@ function refineMessages(
   if (parsed.artifacts) {
     parsed.artifacts.forEach((artifact) => {
       Object.entries(artifact.actions).forEach(([file, code]) => {
-        if (!updated.some((m) => m.file === file)) {
-          updated.push({ role: "assistant", file, content: code as string });
+        // Check if this file already exists for this conversation turn
+        if (!updated.some((m) => m.file === file && m.conversationTurn === currentTurn)) {
+          updated.push({ 
+            role: "assistant", 
+            file, 
+            content: code as string,
+            conversationTurn: currentTurn
+          });
         }
       });
     });
@@ -52,9 +64,13 @@ export function Chat({ handleFiles }: { handleFiles: (files: any) => void }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [displayMessages, setDisplayMessages] = useState<DisplayMessage[]>([]);
   const [files, setFiles] = useState<Record<string, string>>({});
+  const [conversationTurn, setConversationTurn] = useState(0);
 
   const handleSend = async () => {
     if (input.trim() === "") return;
+
+    const currentTurnNumber = conversationTurn + 1;
+    setConversationTurn(currentTurnNumber);
 
     const userMessage: Message = { content: input, role: "user" };
     setMessages((prev) => [...prev, userMessage]);
@@ -90,7 +106,7 @@ export function Chat({ handleFiles }: { handleFiles: (files: any) => void }) {
           refineMessages(prev, {
             ...parsed,
             assistantMessage: parsed.assistantMessage ?? undefined,
-          })
+          }, currentTurnNumber)
         );
 
         // Merge files
@@ -149,21 +165,25 @@ export function Chat({ handleFiles }: { handleFiles: (files: any) => void }) {
                 message.role === "user"
                   ? "bg-zinc-800 text-white"
                   : message.role === "system"
-                  ? "text-white"
+                  ? "text-white mt-4"
                   : ""
               }`}
             >
-              {/* Codium header only on the FIRST assistant text */}
+              {/* Show Codium header for assistant messages with text content - find first message of each turn */}
               {message.role === "assistant" &&
                 !message.file &&
-                idx ===
-                  displayMessages.findIndex(
-                    (m) => m.role === "assistant" && !m.file
-                  ) && <p className="font-bold pb-2">Codium</p>}
+                message.content &&
+                displayMessages.findIndex(
+                  (m) => m.role === "assistant" && 
+                  !m.file && 
+                  m.conversationTurn === message.conversationTurn
+                ) === idx && (
+                  <p className="font-bold pb-2">Codium</p>
+                )}
 
               {message.file ? (
                 <div>
-                  <p className="font-mono text-sm text-zinc-400 mb-1 flex items-center gap-1">
+                  <p className="font-mono text-sm text-zinc-400 -mb-5 flex items-center gap-1">
                     <Check className="w-4 h-4 text-green-400" /> {message.file}
                   </p>
                 </div>
