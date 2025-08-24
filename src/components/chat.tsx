@@ -79,6 +79,9 @@ export function Chat({ handleFiles }: { handleFiles: (files: any) => void }) {
 
     const res = await fetch("/api/ai", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         messages: [...messages, userMessage],
       }),
@@ -89,58 +92,74 @@ export function Chat({ handleFiles }: { handleFiles: (files: any) => void }) {
       return;
     }
 
+    if (!res.ok) {
+      console.error("Response not OK:", res.status, res.statusText);
+      return;
+    }
+
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = "";
     let done = false;
 
     while (!done) {
-      const { value, done: readerDone } = await reader.read();
-      if (value) {
-        buffer += decoder.decode(value, { stream: true });
+      try {
+        const { value, done: readerDone } = await reader.read();
+        done = readerDone;
+        
+        if (value) {
+          const chunk = decoder.decode(value, { stream: true });
+          buffer += chunk;
 
-        // parse with full buffer (incremental growth)
-        const parsed = parseStreamChunk(buffer);
+          // parse with full buffer (incremental growth)
+          const parsed = parseStreamChunk(buffer);
 
-        setDisplayMessages((prev) =>
-          refineMessages(prev, {
-            ...parsed,
-            assistantMessage: parsed.assistantMessage ?? undefined,
-          }, currentTurnNumber)
-        );
+          // Only update if we have content
+          if (parsed.assistantMessage !== null || (parsed.artifacts && parsed.artifacts.length > 0)) {
+            // Update display messages with streaming content
+            setDisplayMessages((prev) =>
+              refineMessages(prev, {
+                ...parsed,
+                assistantMessage: parsed.assistantMessage ?? undefined,
+              }, currentTurnNumber)
+            );
 
-        // Merge files
-        if (parsed.artifacts && parsed.artifacts.length > 0) {
-          const merged: Record<string, string> = { ...files };
-          parsed.artifacts.forEach((artifact) => {
-            Object.entries(artifact.actions).forEach(([file, code]) => {
-              merged[file] = code as string;
-            });
-          });
-          setFiles(merged);
-          handleFiles(merged);
-        }
+            // Merge files
+            if (parsed.artifacts && parsed.artifacts.length > 0) {
+              const merged: Record<string, string> = { ...files };
+              parsed.artifacts.forEach((artifact) => {
+                Object.entries(artifact.actions).forEach(([file, code]) => {
+                  merged[file] = code as string;
+                });
+              });
+              setFiles(merged);
+              handleFiles(merged);
+            }
 
-        // Keep backend messages
-        if (parsed.assistantMessage != null) {
-          setMessages((prev) => {
-            const updated = [...prev];
-            if (
-              updated.length > 0 &&
-              updated[updated.length - 1].role === "assistant"
-            ) {
-              updated[updated.length - 1].content = parsed.assistantMessage!;
-            } else {
-              updated.push({
-                role: "assistant",
-                content: parsed.assistantMessage!,
+            // Keep backend messages in sync
+            if (parsed.assistantMessage != null) {
+              setMessages((prev) => {
+                const updated = [...prev];
+                if (
+                  updated.length > 0 &&
+                  updated[updated.length - 1].role === "assistant"
+                ) {
+                  updated[updated.length - 1].content = parsed.assistantMessage!;
+                } else {
+                  updated.push({
+                    role: "assistant",
+                    content: parsed.assistantMessage!,
+                  });
+                }
+                return updated;
               });
             }
-            return updated;
-          });
+          }
         }
+      } catch (error) {
+        console.error("Error reading stream:", error);
+        break;
       }
-      done = readerDone;
     }
 
     setDisplayMessages((prev) => [
@@ -188,7 +207,7 @@ export function Chat({ handleFiles }: { handleFiles: (files: any) => void }) {
                   </p>
                 </div>
               ) : (
-                message.content
+                <div className="whitespace-pre-wrap">{message.content}</div>
               )}
             </div>
           </div>
