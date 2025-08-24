@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { AuroraText } from './magicui/aurora-text'
 
 
 const menuItems = [
@@ -41,7 +42,7 @@ export const HeroHeader = () => {
                                 aria-label="home"
                                 className="flex items-center space-x-2">
                                 <Image src="/logo.png" width={30} height={30} alt="codium Image"/> 
-                                <p className=' text-2xl'>Codium</p>
+                                <p className=' text-2xl font-medium'><AuroraText>Codium </AuroraText></p>
                             </Link>
 
                             <button

@@ -137,7 +137,7 @@ export default function HeroSection() {
                                      The AI Code Agent
                                 </TextEffect>
 
-                                <div className='flex justify-center hidden sm:flex'>
+                                <div className='justify-center hidden sm:flex'>
                                     <TypewriterEffectSmooth words={words} className='text-sm ' />
                                 </div>
 
