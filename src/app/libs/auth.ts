@@ -17,11 +17,9 @@ export const authOptions : NextAuthOptions = {
 ],
     callbacks : {
         session :async ({ session }  : any) => {
-            console.log(session);
             
             if(session && session.user)
             {
-                console.log(session);
                 
                     try {
                         const user = await prisma.user.findUnique({

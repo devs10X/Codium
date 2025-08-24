@@ -31,7 +31,6 @@ export default function LoginPage() {
                 const res = await signIn("google",{
                     callbackUrl : "/dashboard",
                 });
-                    console.log("Google Res :",res);
                 }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +64,6 @@ export default function LoginPage() {
                 const res = await signIn("github",{
                     callbackUrl : "/dashboard",
                 });
-                    console.log("Google Res :",res);
                 }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
