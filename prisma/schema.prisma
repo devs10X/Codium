@@ -26,18 +26,27 @@ model User{
 model Chat{
   id String @id @default(uuid())
   userid String
-  user User @relation(fields: [userid], references: [id])
+  user User @relation(fields: [userid], references: [id], onDelete: Cascade)
   messages Message[]
+  files Files[]
   createdAt DateTime @default(now())
 }
 
 model Message{
   id String @id @default(uuid())
   chatid String
-  chat Chat @relation(fields: [chatid], references: [id])
+  chat Chat @relation(fields: [chatid], references: [id], onDelete: Cascade)
   content String
   role  ROLE
   createdAt DateTime @default(now())
+}
+
+model Files{
+  id String @id @default(uuid())
+  chatid String
+  chat Chat @relation(fields: [chatid], references: [id], onDelete: Cascade)
+  content String
+  updatedAt DateTime @default(now())
 }
 
 enum ROLE {
