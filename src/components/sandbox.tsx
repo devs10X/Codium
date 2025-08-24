@@ -46,23 +46,3 @@ export function Sandbox() {
       </div>
       );
 }
-
-const SandPack = () => {
-    return (
-        <Sandpack
-          theme="dark"
-          template="react"
-          options={{
-            externalResources: ["https://cdn.tailwindcss.com"],
-            showLineNumbers: true,
-            showTabs: true,
-            closableTabs: false,
-            showNavigator: true,
-            showInlineErrors: true, // default - false
-            editorHeight: 650, // default - 300
-            editorWidthPercentage: 40, // default - 50
-          }}
-          files={JSON.parse(mockFiles)}
-        />
-    )
-}
