@@ -1,6 +1,7 @@
 import { Logo } from '@/components/logo'
 import Image from 'next/image'
 import Link from 'next/link'
+import { AuroraText } from './magicui/aurora-text'
 
 const links = [
     {
@@ -23,7 +24,7 @@ export default function FooterSection() {
             <div className="mx-auto max-w-5xl px-6">
                 <div className='flex justify-center gap-3'>
                     <Image src="/logo.png" width={30} height={30} alt="codium Image"/> 
-                    <p className=' text-2xl'>Codium</p>
+                    <p className='text-2xl font-medium'><AuroraText>Codium </AuroraText></p>
                 </div>
 
                 <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">

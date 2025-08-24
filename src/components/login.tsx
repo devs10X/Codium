@@ -1,11 +1,9 @@
 "use client"
 
-import { LogoIcon } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
+import Image from "next/image";
+
 
 export default function LoginPage() {
   return (
@@ -16,9 +14,7 @@ export default function LoginPage() {
       >
         <div className="p-8 pb-6">
           <div>
-            <Link href="/" aria-label="go home">
-              <LogoIcon />
-            </Link>
+              <Image src='/logo.png' width={30} height={30} alt="convexImg"/>
             <h1 className="mb-1 mt-4 text-xl font-semibold">
               Sign In to Codium
             </h1>
