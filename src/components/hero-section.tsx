@@ -18,6 +18,8 @@ import IntegrationsSection from './integrations-3'
 import FooterSection from './footer'
 import { AuroraText } from './magicui/aurora-text'
 import { PointerHighlight } from './ui/pointer-highlight'
+import LoopVideo from './mvp-video'
+import CallToAction from './call-to-action'
 
 
 const transitionVariants : any = {
@@ -217,6 +219,19 @@ export default function HeroSection() {
                     <IntegrationsSection/>
                 </div>
         </main>
+
+        <section id='mvp'>
+            <div className='flex flex-col items-center justify-center gap-10 py-5 md:py-10 mt-32'>
+                  <h3 className='text-balance text-4xl font-semibold lg:text-5xl'>Write Smarter, Build Faster with Codium</h3>
+                  <LoopVideo/>
+            </div>
+        </section>
+
+        <section id='mvp'>
+            <div className='flex flex-col items-center justify-center py-2 md:py-4 mt-10'>
+                  <CallToAction/>
+            </div>
+        </section>
 
         <section id='tools'>
             <div className='max-w-10xl border-t mt-20'>
