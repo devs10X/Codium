@@ -13,7 +13,7 @@ import { AuroraText } from './magicui/aurora-text'
 const menuItems = [
     { name: 'Features', href: '#features' },
     { name: 'Tools', href: '#tools' },
-    { name: 'About', href: '#about' },
+    { name: 'MVP', href: '#mvp' },
 ]
 
 export const HeroHeader = () => {

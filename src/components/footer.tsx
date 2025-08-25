@@ -13,8 +13,8 @@ const links = [
         href: '#tools',
     },
     {
-        title: 'About',
-        href: '#about',
+        title: 'MVP',
+        href: '#mvp',
     },
 ]
 
