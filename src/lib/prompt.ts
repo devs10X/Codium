@@ -96,6 +96,10 @@ ULTRA IMPORTANT: Create code in multiple files not only in one file. The code sh
 
 ULTRA IMPORTANT: Strictly create all the files imported in main file and use relative paths
 
+ULTRA IMPORTANT: Your entry file is /App.js always start writing code in this file
+
+ULTRA ULTRA IMPORTANT : The imported file path should be "/dir/filename" or "/filename" dont use "./dir/filename" and "./filename"
+
 example: 
     <user_query>Can you help me create a React app to calculate the 2+2?</user_query>
     <assistant_message>
