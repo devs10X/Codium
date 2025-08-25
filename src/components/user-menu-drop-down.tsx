@@ -63,13 +63,6 @@ export default function UserMenu() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup className="px-3 font-medium text-sm">
-            <DropdownMenuItem>
-              <User />
-              Profile
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup className="px-3 font-medium text-sm">
             <DropdownMenuItem onClick={async () => {
                await signOut();
                redirect('/');
