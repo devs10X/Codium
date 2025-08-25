@@ -227,7 +227,7 @@ export default function HeroSection() {
             </div>
         </section>
 
-        <section id='mvp'>
+        <section id='ct'>
             <div className='flex flex-col items-center justify-center py-2 md:py-4 mt-10'>
                   <CallToAction/>
             </div>
