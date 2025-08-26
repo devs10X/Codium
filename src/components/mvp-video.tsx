@@ -29,7 +29,7 @@ const LoopVideo: React.FC = () => {
   return (
     <video
       ref={videoRef}
-      width={"60%"}
+      width={"80%"}
       autoPlay
       muted
       preload="auto"

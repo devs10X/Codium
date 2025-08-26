@@ -14,7 +14,7 @@ export function Sandbox({files}: {files: any}) {
     return (
         <div className="h-full">
         <SandpackProvider template="react" theme="dark" style={{height: "100%", width: "100%"}} options={{
-            autorun: true,
+            autorun: false,
             recompileMode: "immediate",
             recompileDelay: 300,
             externalResources: ["https://cdn.tailwindcss.com"],
