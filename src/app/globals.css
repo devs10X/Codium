@@ -205,6 +205,20 @@ html {
   }
 }
 
+body::-webkit-scrollbar{
+  width: 4px;
+}
+
+body::-webkit-scrollbar-track{
+  background: #1a1a1a;
+}
+
+body::-webkit-scrollbar-thumb{
+  background-color: #555;
+  border-radius: 9999px;
+  border: 1px solid #1a1a1a;
+}
+
 @layer utilities {
   /* WebKit browsers */
   .scrollbar-custom::-webkit-scrollbar {
